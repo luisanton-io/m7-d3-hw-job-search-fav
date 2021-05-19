@@ -6,17 +6,20 @@ import { Navbar, Nav } from 'react-bootstrap'
 import FavouritesPage from './components/FavouritesPage';
 import JobDetail from './components/JobDetail';
 import SearchPage from './components/SearchPage';
+import Toast from './components/Toast';
 import store from './store';
 
 function App() {
   return (
     <BrowserRouter>
       <Provider store={store}>
+        <Toast />
         <Navbar bg="primary" variant="dark">
           <Nav className="mx-auto">
-            <Link to="/favourites" className="text-white font-bold text-decoration-none">Favourites</Link>
+            <Link to="/favourites" className="text-white text-decoration-none">Favourites</Link>
           </Nav>
         </Navbar>
+
 
         <Switch>
           <Route exact path="/" component={SearchPage} />

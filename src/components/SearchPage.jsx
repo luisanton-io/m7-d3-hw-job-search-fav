@@ -1,7 +1,7 @@
 import React from 'react'
 import { Col, Container, Form, Row } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { ADD_TO_FAV, REMOVE_FROM_FAV } from '../store/actions'
+import { ADD_TO_FAV, REMOVE_FROM_FAV, RESET_TOAST_MESSAGE, SET_TOAST_MESSAGE } from '../store/actions'
 import JobListing from './JobListing'
 
 const mapStateToProps = state => state
@@ -9,6 +9,13 @@ const mapStateToProps = state => state
 const mapDispatchToProps = dispatch => ({
     addToFav: job => dispatch({ type: ADD_TO_FAV, payload: job }),
     removeFromFav: job => dispatch({ type: REMOVE_FROM_FAV, payload: job }),
+    displayMessage: message => {
+        dispatch({ type: SET_TOAST_MESSAGE, payload: message })
+
+        setTimeout(() => {
+            dispatch({ type: RESET_TOAST_MESSAGE })
+        }, 4000);
+    }
 })
 
 class SearchPage extends React.Component {
@@ -28,6 +35,9 @@ class SearchPage extends React.Component {
         e.preventDefault()
         const { description, location } = this.state
         const response = await fetch(`https://strive-proxy.herokuapp.com/https://jobs.github.com/positions.json?description=${description}&location=${location}`)
+
+        if (!response.ok) this.props.displayMessage("ERROR")
+
         const results = await response.json()
 
         this.setState({ results })
@@ -50,7 +60,7 @@ class SearchPage extends React.Component {
                     </Form>
                     {this.state.results.map(result => {
                         const isFav = this.props.favourites.some(f => f.id === result.id)
-                        return <JobListing job={result} isFav={isFav} addToFav={this.props.addToFav} removeFromFav={this.props.removeFromFav} />
+                        return <JobListing job={result} isFav={isFav} addToFav={this.props.addToFav} removeFromFav={this.props.removeFromFav} displayMessage={this.props.displayMessage} />
                     })}
                 </Col>
             </Row>

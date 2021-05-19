@@ -1,7 +1,10 @@
-import { ADD_TO_FAV, REMOVE_FROM_FAV } from "../actions"
+import { ADD_TO_FAV, REMOVE_FROM_FAV, SET_TOAST_MESSAGE, RESET_TOAST_MESSAGE } from "../actions"
 
 const initialState = {
-    favourites: []
+    favourites: [],
+    toast: {
+        message: ""
+    }
 }
 
 export default function rootReducer(state = initialState, action) {
@@ -16,6 +19,20 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 favourites: state.favourites.filter(f => f.id !== action.payload.id)
+            }
+        case SET_TOAST_MESSAGE:
+            return {
+                ...state,
+                toast: {
+                    message: action.payload
+                }
+            }
+        case RESET_TOAST_MESSAGE:
+            return {
+                ...state,
+                toast: {
+                    message: ""
+                }
             }
         default: return state
     }
