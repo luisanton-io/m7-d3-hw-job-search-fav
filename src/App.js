@@ -14,7 +14,7 @@ function App() {
       <Provider store={store}>
         <Navbar bg="primary" variant="dark">
           <Nav className="mx-auto">
-            <Link to="/favourites">Favourites</Link>
+            <Link to="/favourites" className="text-white font-bold text-decoration-none">Favourites</Link>
           </Nav>
         </Navbar>
 
