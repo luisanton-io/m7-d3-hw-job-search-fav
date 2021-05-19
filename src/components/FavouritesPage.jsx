@@ -14,7 +14,7 @@ class FavouritesPage extends React.Component {
         return <>{
             this.props.favourites
                 ? this.props.favourites.map(fav => (
-                    <JobListing isFav job={fav} removeFromFavourites={this.props.removeFromFavourites} />
+                    <JobListing isFav job={fav} removeFromFav={this.props.removeFromFav} />
                 ))
                 : null
         }</>
